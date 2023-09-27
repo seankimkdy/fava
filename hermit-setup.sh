@@ -1,11 +1,12 @@
 #!/bin/sh
 
-# Take in device name as argument
-if [ "$#" -ne 1 ]; then
-	echo "Usage: $0 DEVICE" >&2
+# Arguments
+if [ "$#" -ne 2 ]; then
+	echo "Usage: $0 DEVICE BOOTCONFIG" >&2
 	exit 1
 fi
 DEVICE_NAME=$1
+BOOT_CONFIG=$2
 
 USER=$(whoami)
 HERMIT_DIR=/users/${USER}/scratch
@@ -26,10 +27,10 @@ sudo apt-get update
 sudo apt-get install libelf-dev
 
 cd $HERMIT_DIR
-git clone git@github.com:uclasystem/hermit.git
+git clone https://github.com/uclasystem/hermit.git
 cd hermit/linux-5.14-rc5
 
-cp config-with-rdma-driver .config
+cp $BOOT_CONFIG .config
 sudo ./build_kernel.sh build
 sudo ./build_kernel.sh install
 
