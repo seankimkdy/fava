@@ -12,7 +12,7 @@ USER=$(whoami)
 HERMIT_DIR=/users/${USER}/scratch
 
 # Setup disk
-echo 'Setting up $HERMIT_DIR on $DEVICE_NAME'
+echo "Setting up $HERMIT_DIR on $DEVICE_NAME"
 if [ ! -d $HERMIT_DIR ]; then
  	mkdir -p $HERMIT_DIR
 	sudo mkfs.ext4 $DEVICE_NAME
