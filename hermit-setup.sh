@@ -18,7 +18,7 @@ if [ ! -d $HERMIT_DIR ]; then
 	sudo mkfs.ext4 $DEVICE_NAME
 	sudo mount -t ext4 $DEVICE_NAME $HERMIT_DIR
 	sudo chown $(whoami) $HERMIT_DIR
-	echo '${DEVICE_NAME}\t${HERMIT_DIR}\text4\tdefaults\t0\t2' | sudo tee -a /etc/fstab > /dev/null
+	echo "${DEVICE_NAME}\t${HERMIT_DIR}\text4\tdefaults\t0\t2" | sudo tee -a /etc/fstab > /dev/null
 fi
 
 # Install hermit
