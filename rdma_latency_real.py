@@ -41,20 +41,18 @@ if __name__ == '__main__':
     unit_sizes = [64, 128, 256, 512, 1024, 2048, 4096]
     read_lats = []
     for unit_size in unit_sizes:
-        print(f'unit_size: {unit_size}')
         rdma_server_ssh_client.exec_command('ib_read_lat')
         output, error = exec_command(rdma_client_ssh_client, f'ib_read_lat {rdma_server_ip_addr} -F -s {unit_size}') # -F to ignore CPU frequency warning
         read_lats_unit_size = []
         for scan_size in scan_sizes:
             # TODO: not sure if multiplying by the number of units to fetch makes sense, especially for p99
-            print(f'scan_size: {scan_size}')
-            print(max(scan_size/unit_size, 1))
             read_lats_unit_size.append(parse_perf_test_output(output) * max(scan_size/unit_size, 1))
         read_lats.append(read_lats_unit_size)
 
     # Plot
     fig, ax = plt.subplots(figsize=(8, 5))
     for unit_size, read_lat in zip(unit_sizes, read_lats):
+        print([lat[2] for lat in read_lat])
         ax.plot(scan_sizes, [lat[2] for lat in read_lat], label=f'Unit Size: {unit_size}')
 
     plt.xscale('log', base=2)
